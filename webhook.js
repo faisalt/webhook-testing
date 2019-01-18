@@ -11,11 +11,8 @@
 
 var http = require('http');
 var crypto = require('crypto');
-var exec = require('child_process').execSync;
+var exec = require('child_process').exec;
 var fs = require('fs');
-
-// Get the directory location of the Front-end foundation repo.
-var FEF_DIRECTORY = process.env.FEF_DIRECTORY ? process.env.FEF_DIRECTORY : "";
 
 // Load the secure key from an environment variable.
 var WEBHOOK_SIGNATURE = process.env.FEF_WEBHOOK_SIGNATURE;
@@ -61,10 +58,6 @@ var server = http.createServer(function (req, res) {
             " && " + GIT_CHECKOUT_MASTER_CMD +
             " && " + GIT_CHECKOUT_TAG_CMD + RELEASE_TAG;
 
-          if(FEF_DIRECTORY) {
-            GIT_CMDS = "cd " + FEF_DIRECTORY + " && " + GIT_CMDS;
-            GULP_DEPLOY_CMD = "cd " + FEF_DIRECTORY + " && " + GULP_DEPLOY_CMD;
-          }
           // Checkout the release tag.
           execWithLog(GIT_CMDS);
           // Run the Gulp deploy command.
