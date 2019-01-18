@@ -11,7 +11,7 @@
 
 var http = require('http');
 var crypto = require('crypto');
-var exec = require('child_process').exec;
+var exec = require('child_process').execSync;
 var fs = require('fs');
 
 // Get the directory location of the Front-end foundation repo.
