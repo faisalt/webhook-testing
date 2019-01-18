@@ -27,7 +27,7 @@ var GIT_RESET_CMD = "git reset --hard";
 var GIT_FETCH_ORIGIN_CMD = "git fetch origin";
 
 // Git checkout command.
-var GIT_CHECKOUT_MASTER_CMD = "git checkout master";
+var GIT_CHECKOUT_MASTER_CMD = "git checkout develop";
 
 // Git command to checkout a tag (without the tag version number).
 var GIT_CHECKOUT_TAG_CMD = "git checkout tags/";
