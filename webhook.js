@@ -2,11 +2,11 @@
  * Webhook script designed to initialise a HTTP server and listen for requests from
  * Github webhooks (ie in this case when a new release is made).
  *
- * This file should live outside of the Front-end foundations directory otherwise if a
- * release consists of changes to this file, it may cause the script to crash.
- * Therefore, for automation purposes, if this file changes then it will be necessary
- * to manually run the deploy process. But the idea is that this file will
- * not need to change much.
+ * It should be noted that any code updates to this file, and a subsequent release that
+ * includes updates to this file may cause it to crash (as the repo updates whilst this
+ * file is still running). Therefore, in such a case, it will be necessary to manually
+ * log in to the server, stop this script, run the update, and re-run this script.
+ * But the idea is that this file will not need to change often.
  */
 
 var http = require('http');
@@ -28,6 +28,9 @@ var GIT_CHECKOUT_MASTER_CMD = "git checkout develop";
 
 // Git command to checkout a tag (without the tag version number).
 var GIT_CHECKOUT_TAG_CMD = "git checkout tags/";
+
+// NPM install command.
+var NPM_INSTALL_CMD = "npm install";
 
 // Gulp deploy command.
 var GULP_DEPLOY_CMD = "node_modules/gulp/bin/gulp.js deploy";
@@ -58,8 +61,8 @@ var server = http.createServer(function (req, res) {
             " && " + GIT_CHECKOUT_MASTER_CMD +
             " && " + GIT_CHECKOUT_TAG_CMD + RELEASE_TAG;
 
-          // Checkout the release tag and run gulp deploy.
-          execWithLog(GIT_CMDS + " && " + GULP_DEPLOY_CMD);
+          // Checkout the release tag and run the Gulp deploy command.
+          execWithLog(GIT_CMDS + " && " + NPM_INSTALL_CMD + " && " + GULP_DEPLOY_CMD);
         }
         catch (err) {
           logOutput(err.toString());
