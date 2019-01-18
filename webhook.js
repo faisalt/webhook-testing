@@ -58,10 +58,8 @@ var server = http.createServer(function (req, res) {
             " && " + GIT_CHECKOUT_MASTER_CMD +
             " && " + GIT_CHECKOUT_TAG_CMD + RELEASE_TAG;
 
-          // Checkout the release tag.
-          execWithLog(GIT_CMDS);
-          // Run the Gulp deploy command.
-          execWithLog(GULP_DEPLOY_CMD);
+          // Checkout the release tag and run gulp deploy.
+          execWithLog(GIT_CMDS + " && " + GULP_DEPLOY_CMD);
         }
         catch (err) {
           logOutput(err.toString());
